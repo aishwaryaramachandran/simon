@@ -51,7 +51,8 @@ function NoteBox(key, onClick) {
 		// Added set time out to play the key after 2.5 seconds
 		setTimeout(() => {
 			this.onClick(this.key)
-			this.play()	}, 2500)
+			this.play()	
+		}, 2500)
 		
 	}.bind(this)
 
