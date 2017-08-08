@@ -1,10 +1,9 @@
 var KEYS = ['c', 'd', 'e', 'f'];
 var NOTE_DURATION = 1000;
+let DELAY = 2500
 
 // NoteBox
-//
-// Acts as an interface to the coloured note boxes on the page, exposing methods
-// for playing audio, handling clicks,and enabling/disabling the note box.
+
 function NoteBox(key, onClick) {
 	// Create references to box element and audio element.
 	var boxEl = document.getElementById(key);
@@ -12,11 +11,8 @@ function NoteBox(key, onClick) {
 	if (!boxEl) throw new Error('No NoteBox element with id' + key);
 	if (!audioEl) throw new Error('No audio element with id' + key + '-audio');
 
-	// When enabled, will call this.play() and this.onClick() when clicked.
-	// Otherwise, clicking has no effect.
 	var enabled = true;
-	// Counter of how many play calls have been made without completing.
-	// Ensures that consequent plays won't prematurely remove the active class.
+
 	var playing = 0;
 
 	this.key = key;
@@ -52,19 +48,16 @@ function NoteBox(key, onClick) {
 	// Call this NoteBox's clickHandler and play the note.
 	this.clickHandler = function () {
 		if (!enabled) return;
-
-		this.onClick(this.key)
-		this.play()
+		// Added set time out to play the key after 2.5 seconds
+		setTimeout(() => {
+			this.onClick(this.key)
+			this.play()	}, 2500)
+		
 	}.bind(this)
 
 	boxEl.addEventListener('mousedown', this.clickHandler);
 }
 
-// Example usage of NoteBox.
-//
-// This will create a map from key strings (i.e. 'c') to NoteBox objects so that
-// clicking the corresponding boxes on the page will play the NoteBox's audio.
-// It will also demonstrate programmatically playing notes by calling play directly.
 var notes = {};
 
 KEYS.forEach(function (key) {
